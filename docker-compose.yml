@@ -1,0 +1,21 @@
+version: "3.7"
+
+services:
+  postgres:
+    container_name: flight_postgres
+    image: postgres:14
+    ports:
+      - 5432:5432
+    environment:
+      - "POSTGRES_PASSWORD=postgres"
+      - "POSTGRES_USER=postgres"
+  adminer:
+    container_name: flight_adminer
+    image: wodby/adminer:4.8
+    ports:
+      - 9000:9000
+    environment:
+      - "ADMINER_DEFAULT_DB_DRIVER=pgsql"
+      - "ADMINER_DEFAULT_DB_HOST=postgres"
+    depends_on:
+      - postgres
