@@ -25,6 +25,7 @@ defmodule PhoenixCatsWeb.Router do
     pipe_through(:api)
 
     get("/cats", CatController, :index)
+    get("/cats/:id", CatController, :show)
   end
 
   # Enables LiveDashboard only for development
