@@ -1,10 +1,10 @@
-defmodule PhoenixCats.Cat do
+defmodule PhoenixCats.Animals.Cat do
   use Ecto.Schema
   import Ecto.Changeset
 
   schema "cats" do
-    field(:color, :string)
-    field(:name, :string)
+    field :color, :string
+    field :name, :string
 
     timestamps()
   end
