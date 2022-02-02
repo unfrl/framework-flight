@@ -43,7 +43,24 @@ func main() {
 		db.Find(&cats)
 
 		context.JSON(200, gin.H{
-			"cats": cats,
+			"result": cats,
+		})
+	})
+
+	router.GET("/cats/:id", func(context *gin.Context) {
+		var cat Cat
+
+		result := db.Find(&cat, context.Param("id"))
+
+		if result.RowsAffected == 0 {
+			context.JSON(404, gin.H{
+				"error": "Cat not found",
+			})
+			return
+		}
+
+		context.JSON(200, gin.H{
+			"result": cat,
 		})
 	})
 
