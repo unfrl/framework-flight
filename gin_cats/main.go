@@ -25,10 +25,6 @@ func main() {
 
 	db.AutoMigrate(&Cat{})
 
-	if db.Find(&Cat{}).RowsAffected == 0 {
-		db.Create(&Cat{Name: "Benny", Color: "Brown"})
-	}
-
 	router := gin.Default()
 
 	router.POST("/cats", CreateCat(db))
