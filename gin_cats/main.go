@@ -10,12 +10,6 @@ import (
 
 const DbSource string = "host=localhost user=postgres password=postgres dbname=phoenix_cats_dev"
 
-type Cat struct {
-	gorm.Model
-	Name  string
-	Color string
-}
-
 func main() {
 	fmt.Println("gin cats go!")
 
@@ -37,32 +31,9 @@ func main() {
 
 	router := gin.Default()
 
-	router.GET("/cats", func(context *gin.Context) {
-		var cats []Cat
-
-		db.Find(&cats)
-
-		context.JSON(200, gin.H{
-			"result": cats,
-		})
-	})
-
-	router.GET("/cats/:id", func(context *gin.Context) {
-		var cat Cat
-
-		result := db.Find(&cat, context.Param("id"))
-
-		if result.RowsAffected == 0 {
-			context.JSON(404, gin.H{
-				"error": "Cat not found",
-			})
-			return
-		}
-
-		context.JSON(200, gin.H{
-			"result": cat,
-		})
-	})
+	router.POST("/cats", CreateCat(db))
+	router.GET("/cats", GetCats(db))
+	router.GET("/cats/:id", GetCat(db))
 
 	router.Run() // default localhost:8080
 }
