@@ -14,9 +14,9 @@ type Cat struct {
 func main() {
 	fmt.Println("gin cats go!")
 
-	engine := gin.Default()
+	router := gin.Default()
 
-	engine.GET("/cats", func(context *gin.Context) {
+	router.GET("/cats", func(context *gin.Context) {
 		cats := []Cat{
 			{Name: "Benny", Color: "Brown"},
 		}
@@ -25,5 +25,5 @@ func main() {
 		})
 	})
 
-	engine.Run() // default localhost:8080
+	router.Run() // default localhost:8080
 }
