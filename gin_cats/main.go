@@ -20,14 +20,13 @@ func main() {
 }
 
 func initDb() *gorm.DB {
-	db, err := gorm.Open(
-		postgres.New(postgres.Config{
-			DSN:                  DbSource,
-			PreferSimpleProtocol: true,
-		}), &gorm.Config{})
+	db, err := gorm.Open(postgres.New(postgres.Config{
+		DSN:                  DbSource,
+		PreferSimpleProtocol: true,
+	}), &gorm.Config{})
 
 	if err != nil {
-		panic("failed to connect to db!")
+		panic(err)
 	}
 
 	db.AutoMigrate(&Cat{})
