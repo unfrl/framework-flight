@@ -41,9 +41,7 @@ func GetCats(db *gorm.DB) gin.HandlerFunc {
 		var cats []Cat
 		db.Find(&cats)
 
-		context.JSON(http.StatusOK, gin.H{
-			"result": cats,
-		})
+		context.JSON(http.StatusOK, gin.H{"result": cats})
 	}
 }
 
@@ -51,14 +49,10 @@ func GetCat(db *gorm.DB) gin.HandlerFunc {
 	return func(context *gin.Context) {
 		var cat Cat
 		if result := db.Find(&cat, context.Param("id")); result.RowsAffected == 0 {
-			context.JSON(http.StatusNotFound, gin.H{
-				"error": "Cat not found",
-			})
+			context.JSON(http.StatusNotFound, gin.H{"error": "Cat not found"})
 			return
 		}
 
-		context.JSON(http.StatusOK, gin.H{
-			"result": cat,
-		})
+		context.JSON(http.StatusOK, gin.H{"result": cat})
 	}
 }
