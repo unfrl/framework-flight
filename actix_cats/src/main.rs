@@ -1,7 +1,7 @@
 #[macro_use]
 extern crate diesel;
 
-use actix_web::{get, web, App, Error, HttpResponse, HttpServer};
+use actix_web::{get, post, web, App, Error, HttpResponse, HttpServer};
 use diesel::prelude::*;
 use diesel::r2d2::{self, ConnectionManager};
 
@@ -31,6 +31,7 @@ async fn main() -> std::io::Result<()> {
             // set up DB pool to be used with web::Data<Pool> extractor
             .app_data(web::Data::new(pool.clone()))
             .service(get_cat)
+            .service(add_cat)
     })
     .bind(&bind)?
     .run()
@@ -55,4 +56,19 @@ async fn get_cat(pool: web::Data<DbPool>, cat_id: web::Path<i32>) -> Result<Http
         let res = HttpResponse::NotFound().body(format!("No cat found with id {}", cat_id));
         Ok(res)
     }
+}
+
+#[post("/cats")]
+async fn add_cat(
+    pool: web::Data<DbPool>,
+    form: web::Json<models::NewCat>,
+) -> Result<HttpResponse, Error> {
+    let cat = web::block(move || {
+        let conn = pool.get()?;
+        actions::create_new_cat(&form.name, &form.color, &conn)
+    })
+    .await?
+    .map_err(actix_web::error::ErrorInternalServerError)?;
+
+    Ok(HttpResponse::Ok().json(cat))
 }

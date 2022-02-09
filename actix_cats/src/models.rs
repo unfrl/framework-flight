@@ -9,7 +9,8 @@ pub struct Cat {
     pub color: String,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Insertable, Serialize, Deserialize)]
+#[table_name = "cats"]
 pub struct NewCat {
     pub name: String,
     pub color: String,
