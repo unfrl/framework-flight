@@ -175,6 +175,15 @@ fn ownership() {
 
     let (value, length) = calc_length(String::from("something"));
     println!("calc_length() = {} {}", value, length);
+
+    let my_value = String::from("howdy");
+    let length = calc_length_with_ref(&my_value);
+    // b/c passed by reference (ie function does not take ownership), my_value can still be used
+    println!("'{}' length: {}", my_value, length);
+
+    let mut hello = String::from("hello");
+    change(&mut hello);
+    println!("{}", hello);
 }
 
 fn takes_ownership(some_string: String) {
@@ -199,4 +208,13 @@ fn calc_length(some_string: String) -> (String, usize) {
     let length = some_string.len();
 
     (some_string, length)
+}
+
+// since some_string is reference, this is called _borrowing_
+fn calc_length_with_ref(some_string: &String) -> usize {
+    some_string.len()
+}
+
+fn change(value: &mut String) {
+    value.push_str("world");
 }
