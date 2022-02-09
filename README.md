@@ -9,7 +9,7 @@
 
 ## [Go](https://go.dev/) + [Gin](https://gin-gonic.com/)
 
-- [Gorm ORM Library](https://gorm.io/) and the [postgres driver](https://github.com/go-gorm/postgres)
+- Using the [Gorm ORM Library](https://gorm.io/) and its [postgres driver](https://github.com/go-gorm/postgres).
 
 ## [Kotlin](https://kotlinlang.org/) + [Spring](https://spring.io/guides/tutorials/spring-boot-kotlin/) or [Ktor](https://ktor.io/) (TBD)
 
