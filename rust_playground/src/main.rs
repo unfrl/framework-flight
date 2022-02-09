@@ -6,6 +6,7 @@ fn main() {
     guessing_game(false);
     variables();
     functions();
+    ownership();
 }
 
 fn guessing_game(should_run: bool) {
@@ -140,4 +141,62 @@ fn for_loop() {
     for element in a {
         println!("element {}", element);
     }
+}
+
+fn ownership() {
+    println!("\n~~OWNERSHIP~~\n");
+
+    let mut s = String::from("hello");
+
+    s.push_str(", world!!!!");
+
+    println!("{}", s);
+
+    let s1 = String::from("hello");
+    // if .clone() had not been called, then s1 would have been invalidated,
+    // resulting in a compiler error in the next println statement
+    let s2 = s1.clone();
+    println!("s1 = {}, s2 = {}!", s1, s2);
+
+    // scalar types are stored on the stack -- do not need to call clone
+    let x = 5;
+    let y = x;
+    println!("x = {}, y = {}", x, y);
+
+    let some_string = String::from("hello"); // some_string comes into scope
+    takes_ownership(some_string); // some_string's value moves into function & is no longer valid after this call
+
+    let some_int = 5; // some_int comes into scope
+    makes_copy(some_int); // some_int moves into the function, but since it's i32 it's a Copy and OK to use afterward
+
+    let my_string = gives_ownership();
+    let one_more = takes_and_gives_back(my_string);
+    println!("{}", one_more);
+
+    let (value, length) = calc_length(String::from("something"));
+    println!("calc_length() = {} {}", value, length);
+}
+
+fn takes_ownership(some_string: String) {
+    println!("{}", some_string)
+} // some_string goes out of scope and drop is called -- backing memory is freed
+
+fn makes_copy(some_int: i32) {
+    println!("{}", some_int)
+}
+
+fn gives_ownership() -> String {
+    let some_string = String::from("yours");
+
+    some_string
+}
+
+fn takes_and_gives_back(another_string: String) -> String {
+    another_string
+}
+
+fn calc_length(some_string: String) -> (String, usize) {
+    let length = some_string.len();
+
+    (some_string, length)
 }
