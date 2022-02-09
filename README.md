@@ -17,4 +17,6 @@ _WIP_
 
 ## [Rust](https://www.rust-lang.org/) + [Actix](https://actix.rs/)
 
-_WIP_
+- Using [Diesel ORM library](https://diesel.rs). Since I'm only using postgres, first need to install the postgres client before installing the diesel CLI otherwise it'll error out:
+  - `sudo apt-get install libpq-dev`
+  - `cargo install diesel_cli --no-default-features --features "postgres"`
