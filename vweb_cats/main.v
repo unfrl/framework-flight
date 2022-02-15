@@ -40,12 +40,12 @@ fn (mut app App) cat(cat_id int) vweb.Result {
 
 ['/cats'; post]
 fn (mut app App) new_cat() vweb.Result {
-	new_cat := json.decode(Cat, app.req.data) or {
+	cat_json := json.decode(Cat, app.req.data) or {
 		eprintln('Failed to decode data, $err')
 		return app.text('Failed to create cat')
 	}
 
-	cat := app.create_cat(new_cat.name, new_cat.color)
+	cat := app.create_cat(cat_json.name, cat_json.color)
 
 	return app.json(cat)
 }
