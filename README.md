@@ -20,3 +20,4 @@ _WIP_
 - Using [Diesel ORM library](https://diesel.rs). Since I'm only using postgres, first need to install the postgres client before installing the diesel CLI otherwise it'll error out:
   - `sudo apt-get install libpq-dev`
   - `cargo install diesel_cli --no-default-features --features "postgres"`
+- Might consider pulling out the diesel library for [SeaORM](https://www.sea-ql.org/SeaORM/) because it's async.
